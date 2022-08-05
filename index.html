@@ -80,7 +80,7 @@
             background-color: hsla(0, 0%, 0%, 0.432);
             height: auto;
             max-width: 800px;
-            
+
         }
 
         .navPad {
@@ -89,31 +89,35 @@
             color: #ffffff;
 
         }
+
         .nav-link {
             color: #ffffff;
         }
     </style>
 </head>
 <nav class="navbar navPad navbar-expand-lg">
-        <ul class="navbar-nav  mt-2 mt-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" href="https://sockmonkeyy.github.io/jscraps/">Craps</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://sockmonkeyy.github.io/basicquiz/">Basic Quiz</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://sockmonkeyy.github.io/QuickQuiz/">Web Dev Quiz</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://sockmonkeyy.github.io/jscraps/version1NumberGuessingGame.html">Number Guessing Game</a>
-            </li>
-        </ul>
+    <ul class="navbar-nav  mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="https://sockmonkeyy.github.io/jscraps/">Craps</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://sockmonkeyy.github.io/basicquiz/">Basic Quiz</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://sockmonkeyy.github.io/QuickQuiz/">Web Dev Quiz</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://sockmonkeyy.github.io/jscraps/version1NumberGuessingGame.html">Number
+                Guessing Game</a>
+        </li>
+    </ul>
 </nav>
 
 <body class="text-center">
-    <div class="h1 container main pt-5 ">Rock, Paper, Scissors!!!
-        <h1 class="gameText" id="playerText">
+    <div class="h1 container main pt-5 pb-5">Rock, Paper, Scissors!!!
+        <h1 class="pt-2" id="playerScore"></h1>
+        <h1 class="" id="computerScore"></h1>
+        <h1 class="gameText pt-2" id="playerText">
             Player:
         </h1>
         <h1 class="gameText" id="computerText">
@@ -122,10 +126,14 @@
         <h1 class="gameText pb-2" id="resultText">
             Result:
         </h1>
+        <h1 class="gameText pb-2" id="result">
+            Result:
+        </h1>
+
         <div class="col">
-            <button class="choiceBtn Green3D">Rock</button>
-            <button class="choiceBtn Green3D">Paper</button>
-            <button class="choiceBtn Green3D">Scissors</button>
+            <button class="choiceBtn Green3D" value="rock">rock</button>
+            <button class="choiceBtn Green3D" value="paper">paper</button>
+            <button class="choiceBtn Green3D" value="scissors">scissors</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
@@ -140,47 +148,63 @@
         let player;
         let computer;
         let result;
-        let score = 0;
+        let playerScore = 0;
+        let computerScore = 0;
 
         choiceBtn.forEach(button => button.addEventListener("click", () => {
             player = button.textContent;
-            computerTurn();
+            
             playerText.textContent = `Player: ${player}`;
-            computerText.textContent = `Computer: ${computer}`;
+            
             resultText.textContent = checkWinner();
 
         }));
 
         function computerTurn() {
-            const randNum = Math.floor(Math.random() * 3) + 1;
-            switch (randNum) {
-                case 1:
-                    computer = 'Rock';
-                    break;
-                case 2:
-                    computer = 'Paper';
-                    break;
-
-                case 3:
-                    computer = 'Scissors';
-                    break;
-            }
+            let choices = ['rock', 'paper', 'scissors']
+            return choices[Math.floor(Math.random() * choices.length)]
+            
         }
-        const CORRECT_BONUS = 10;
+        function disableButtons() {
+            choiceBtn.forEach(elem => {
+                elem.disabled = true
+            })
+        }
 
         function checkWinner() {
-            if (player == computer) {
-                return 'Draw!';
+            let computer = computerTurn();
+            let result = ''
+            computerText.textContent = `Computer: ${computer}`;
+            if ((player == 'rock' && computer == 'scissors') ||
+                (player == 'scissors' && computer == 'paper') ||
+                (player == 'paper' && computer == 'rock')) {
+
+                playerScore += 1
+                result = `You win ${player} beats ${computer}!`
+                document.getElementById('playerScore').innerHTML = `You: ${playerScore}`
+
+                if (playerScore == 5) {
+                    result += `You Won the Game!!!`
+                    disableButtons()
+                }
             }
-            else if (computer == 'Rock') {
-                return (player == 'Paper') ? "You Win!" : "You Lose!"
+            else if (player == computer) {
+                result = 'Draw!';
             }
-            else if (computer == 'Paper') {
-                return (player == 'Scissors') ? "You Win!" : "You Lose!"
+
+            else {
+                computerScore += 1
+                result = `You lose ${computer} beats ${player}`
+                document.getElementById('computerScore').innerHTML = `Bot: ${computerScore}`
+
+                if (computerScore == 5) {
+                    result = `You Loss to a Bot!!!`
+                    disableButtons()
+                }
             }
-            else if (computer == 'Scissors') {
-                return (player == 'Rock') ? "You Win!" : "You Lose!"
-            }
+            console.log(playerScore, computerScore)
+            document.getElementById('result').innerHTML = result
+            return
         }
     </script>
 
