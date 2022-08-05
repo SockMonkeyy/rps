@@ -119,10 +119,10 @@
         <h1 class="pt-2" id="playerScore"></h1>
         <h1 class="" id="computerScore"></h1>
         <h1 class="gameText pt-2 pb-2" id="playerText">
-            Player:
+            You:
         </h1>
         <h1 class="gameText pb-2" id="computerText">
-            Computer:
+            Bot:
         </h1>
         <h1 class="gameText pb-4" id="result">
            
@@ -152,7 +152,7 @@
         choiceBtn.forEach(button => button.addEventListener("click", () => {
             player = button.textContent;
             
-            playerText.textContent = `Player: ${player}`;
+            playerText.textContent = `You: ${player}`;
             
             resultText.textContent = checkWinner();
 
@@ -164,10 +164,11 @@
             
         }
 
+
         function checkWinner() {
             let computer = computerTurn();
             let result = ''
-            computerText.textContent = `Computer: ${computer}`;
+            computerText.textContent = `Bot: ${computer}`;
             if ((player == 'rock' && computer == 'scissors') ||
                 (player == 'scissors' && computer == 'paper') ||
                 (player == 'paper' && computer == 'rock')) {
