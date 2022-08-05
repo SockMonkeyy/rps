@@ -185,7 +185,8 @@
 
                 if (playerScore == 5) {
                     result += `You Won the Game!!!`
-                    disableButtons()
+                    return window.location.assign("./endQuiz.html");
+                    localStorage.setItem('mostRecentScore', computerScore, playerScore);
                 }
             }
             else if (player == computer) {
@@ -199,12 +200,14 @@
 
                 if (computerScore == 5) {
                     result = `You Loss to a Bot!!!`
-                    disableButtons()
+                    return window.location.assign("./endQuiz.html");
                 }
             }
             console.log(playerScore, computerScore)
             document.getElementById('result').innerHTML = result
-            return
+
+            
+            
         }
     </script>
 
