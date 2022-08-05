@@ -124,8 +124,8 @@
         <h1 class="gameText pb-2" id="computerText">
             Computer:
         </h1>
-        <h1 class="gameText pb-2" id="result">
-            Result:
+        <h1 class="gameText pb-4" id="result">
+           
         </h1>
 
         <div class="col">
@@ -162,11 +162,6 @@
             let choices = ['rock', 'paper', 'scissors']
             return choices[Math.floor(Math.random() * choices.length)]
             
-        }
-        function disableButtons() {
-            choiceBtn.forEach(elem => {
-                elem.disabled = true
-            })
         }
 
         function checkWinner() {
